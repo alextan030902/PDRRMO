@@ -2,30 +2,21 @@
 
 @section('content')
 
-@if(session('success'))
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body">
-        {{ session('success') }}
-      </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  <div class="page-title accent-background py-4">
+        <div class="container d-lg-flex justify-content-between align-items-center">
+            <h1 class="mb-2 mb-lg-0">About PDRRMO</h1>
+            <nav class="breadcrumbs">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('pdrrmo.index') }}">
+                            <i class="fas fa-home"></i> Home
+                          </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">About PDRRMO</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-  </div>
-</div>
-@endif
-@if(session('error'))
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body">
-        {{ session('error') }}
-      </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-  </div>
-</div>
-@endif
 
 <!-- Main Content Container -->
 <div class="card shadow-lg rounded-lg p-5 mb-5">
@@ -57,33 +48,40 @@
         </div>
     </div>
 
-    <!-- Other Sections (Mandate, Vision, Mission, Functions) -->
-    @foreach(['mandate', 'vision', 'mission', 'functions'] as $section)
-        <div class="position-relative mb-4">
-            @auth
-            <button class="btn btn-warning position-absolute top-0 end-0 m-2" onclick="toggleEdit('{{ $section }}')"><i class="bi bi-pencil"></i> Edit</button>
-            @endauth
-            <h2 class="mb-4" style="color: #FF9A00"><strong>{{ ucfirst($section) }}</strong></h2>
-            <div id="{{ $section }}-display">
-                <p class="card-text">{!! ${$section}->content ?? 'Add text' !!}</p>
-            </div>
-
-            <form id="{{ $section }}-edit-form" action="{{ route('about-pdrrmo.update', $section) }}" method="POST" style="display: none;">
-                @csrf
-                <input type="hidden" name="content" id="{{ $section }}_content">
-                <div id="{{ $section }}-editor" class="quill-editor" data-content="{{ htmlentities(${$section}->content ?? 'Add text') }}"></div>
-                <div class="d-flex justify-content-end mt-3">
-                    <button type="submit" class="btn btn-primary me-2">
-                        <i class="bi bi-save"></i> Save
-                    </button>
-                    <button type="button" class="btn btn-danger" onclick="toggleEdit('{{ $section }}')">
-                        <i class="bi bi-x-circle"></i> Cancel
-                    </button>
+    <div class="row">
+        @foreach(['mandate', 'vision', 'mission', 'functions'] as $section)
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        @auth
+                        <button class="btn btn-warning position-absolute top-0 end-0 m-2" onclick="toggleEdit('{{ $section }}')">
+                            <i class="bi bi-pencil"></i> Edit
+                        </button>
+                        @endauth
+                        <h2 class="mb-4" style="color: #FF9A00"><strong>{{ ucfirst($section) }}</strong></h2>
+                        <div id="{{ $section }}-display">
+                            <p class="card-text">{!! ${$section}->content ?? 'Add text' !!}</p>
+                        </div>
+    
+                        <form id="{{ $section }}-edit-form" action="{{ route('about-pdrrmo.update', $section) }}" method="POST" style="display: none;">
+                            @csrf
+                            <input type="hidden" name="content" id="{{ $section }}_content">
+                            <div id="{{ $section }}-editor" class="quill-editor" data-content="{{ htmlentities(${$section}->content ?? 'Add text') }}"></div>
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="submit" class="btn btn-primary me-2">
+                                    <i class="bi bi-save"></i> Save
+                                </button>
+                                <button type="button" class="btn btn-danger" onclick="toggleEdit('{{ $section }}')">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-        </div>
-        <hr class="my-4">
-    @endforeach
+            </div>
+        @endforeach
+    </div>
+    
 
     <!-- Organizational Structure Section -->
     <div class="card shadow-lg rounded-lg mb-3 bg-light">

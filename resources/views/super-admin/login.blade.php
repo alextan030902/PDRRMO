@@ -93,7 +93,7 @@
 
         .img-container img {
             max-width: 100%;
-            height: 150px; /* Enlarged logo size */
+            height: 150px; 
         }
 
         .modal-dialog {
@@ -110,6 +110,17 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+        }
+
+        .password-icon {
+            position: absolute;
+            right: 15px;
+            top: 45%;
+            cursor: pointer;
+        }
+
+        .form-group {
+            position: relative;
         }
 
         @media (max-width: 768px) {
@@ -137,16 +148,19 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required id="passwordField">
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                        <i class="fas fa-eye password-icon" id="togglePassword"></i>
                     </div>
                     <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="customCheck" name="remember">
                         <label class="form-check-label" for="customCheck">Remember Me</label>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
                 </form>
             </div>
         </div>
@@ -156,7 +170,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="spinner-border text-primary" role="status">
+                    <div class="spinner-border text-warning" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <p>Please wait...</p>
@@ -170,6 +184,18 @@
     <script>
         const form = document.getElementById('loginForm');
         const loadingModal = new bootstrap.Modal(document.getElementById('loadingSpinnerModal'));
+        const passwordField = document.getElementById('passwordField');
+        const togglePasswordIcon = document.getElementById('togglePassword');
+
+        togglePasswordIcon.addEventListener('click', function() {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                togglePasswordIcon.classList.replace('fa-eye', 'fa-eye-slash'); 
+            } else {
+                passwordField.type = 'password';
+                togglePasswordIcon.classList.replace('fa-eye-slash', 'fa-eye'); 
+            }
+        });
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();

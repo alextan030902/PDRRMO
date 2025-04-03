@@ -2,6 +2,22 @@
 
 @section('content')
 
+<div class="page-title accent-background py-4">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Rescue Operation</h1>
+        <nav class="breadcrumbs">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('pdrrmo.index') }}">
+                        <i class="fas fa-home"></i> Home
+                      </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Rescue Operation</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
 <section id="portfolio" class="portfolio section position-relative">
 
     @auth
@@ -54,7 +70,10 @@
                             @enderror
                         </div>
                     
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save"></i> Save
+                          </button>
+                          
                     </form>
                 </div>
             </div>
@@ -64,7 +83,6 @@
     <div class="container mt-4">
 
         <div class="row">
-            <!-- Sidebar (Buttons) -->
             <div class="col-md-4 mb-4 mb-md-0">
                 <div class="d-grid gap-2">
                     @if(isset($categories) && !empty($categories))
@@ -82,12 +100,11 @@
                 </div>
             </div>
         
-            <!-- Content Section -->
             <div class="col-md-8">
-                <div class="card shadow-lg"> <!-- Added shadow-lg class here for card shadow -->
+                <div class="card shadow-lg"> 
                     <div class="card-body d-flex flex-column" style="height: 200%;">
                         <div id="content" class="text-center flex-grow-1">
-                            {{-- <h2>Iloilo Rescue Operation</h2> --}}
+                            <h2 class="mb-4">Iloilo Rescue Operation</h2> 
                             @if($rescueOperation && $rescueOperation->content)
                                 <p>{{ $rescueOperation->content }}</p>
                             @else
@@ -103,17 +120,16 @@
                         </div>
                      @auth
                         <div class="btn-group mt-3 flex-shrink-0" role="group" aria-label="Action Buttons">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+                            {{-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
                                 <i class="fas fa-plus"></i> Add
-                            </button>
+                            </button> --}}
                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal">
                                 <i class="fas fa-edit"></i> Edit
                             </button>
-                            <!-- Delete Button and Form -->
-                            <form action="{{ route('programs-services.rescue-operations.destroy', $rescueOperation->id) }}" method="POST" style="display: inline;">
+                            <form action="{{ route('programs-services.rescue-operations.destroy', $rescueOperation->id) }}" method="POST" style="display: inline;" id="deleteForm">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" {{ $rescueOperation ? '' : 'disabled' }}>
+                                <button type="button" class="btn btn-danger btn-sm" {{ $rescueOperation ? '' : 'disabled' }} data-toggle="modal" data-target="#deleteModal">
                                     <i class="fas fa-trash-alt"></i> Delete
                                 </button>
                             </form>
@@ -189,7 +205,7 @@
 
         <!-- Portfolio Filters -->
         <div class="isotope-layout mt-5">
-            <ul class="portfolio-filters isotope-filters d-flex justify-content-start mb-4" data-aos="fade-up" data-aos-delay="100">
+            <ul class="portfolio-filters isotope-filters d-flex justify-content-center align-items-center mb-4" data-aos="fade-up" data-aos-delay="100">
                 <li data-filter="*" class="filter-active">All</li>
                 @foreach($categories as $category)
                     @php
@@ -197,7 +213,7 @@
                             return $operation->category === $category->category && $operation->images && isset($operation->images[0]);
                         })->isNotEmpty();
                     @endphp
-        
+            
                     @if($hasOperations)
                         <li data-filter=".filter-{{ strtolower($category->category) }}">
                             {{ ucwords(str_replace(['_', '-'], ' ', $category->category)) }}
@@ -211,16 +227,16 @@
                     @if($operation->images && isset($operation->images[0]))
                         <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ strtolower($operation->category) }}">
                             <img src="{{ asset('storage/' . $operation->images[0]) }}" class="img-fluid" alt="{{ $operation->category }}">
-                            <div class="portfolio-info">
+                            <div class="portfolio-info" style="display: flex; align-items: center; justify-content: space-between;">
                                 <h4>{{ ucwords(str_replace(['_', '-'], ' ', $operation->category)) }}</h4>
+                            
                                 <a href="{{ asset('storage/' . $operation->images[0]) }}" 
                                    title="{{ ucwords(str_replace(['_', '-'], ' ', $operation->category)) }}" 
                                    data-gallery="portfolio-gallery-{{ strtolower($operation->category) }}" 
                                    class="glightbox preview-link">
                                     <i class="bi bi-zoom-in"></i>
                                 </a>
-                                
-                                <!-- Delete Icon -->
+                            
                                 <form action="{{ route('programs-services.rescue-operations.destroy', $operation->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
@@ -229,6 +245,7 @@
                                     </button>
                                 </form>
                             </div>
+                            
                         </div>
                     @endif
                 @endforeach
@@ -236,6 +253,5 @@
             
         </div>
     </div>
-</section><!-- /Portfolio Section -->
-
+</section>
 @endsection
