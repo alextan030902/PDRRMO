@@ -1,28 +1,29 @@
-<section id="clients" class="clients section">
-
+<section>
     <div class="container section-title" data-aos="fade-up">
-      <h2 class="text-primary">Useful Links</h2>
+        <h2>Useful Links</h2>
     </div>
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-      <div class="row g-0 clients-wrap">
-
-        <div class="col-xl-4 col-md-4 client-logo">
-          <img src="assets/img/clients/client-1.png" class="img-fluid" alt="">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="https://www.pagasa.dost.gov.ph/" target="_blank">
+                    <img src="assets/img/clients/pagasa.png" class="img-fluid w-100" alt="PAGASA">
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="https://www.phivolcs.dost.gov.ph/" target="_blank">
+                    <img src="assets/img/clients/phivolcs.png" class="img-fluid w-100" alt="PHIVOLCS">
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="https://www.facebook.com/share/1A1JbSNqY7/" target="_blank">
+                    <img src="assets/img/clients/pdrrmo.png" class="img-fluid w-100" alt="PDRRRMO">
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="https://www.facebook.com/share/1F3WFG6GAe/" target="_blank">
+                    <img src="assets/img/clients/opcen.png" class="img-fluid w-100" alt="OPCEN">
+                </a>
+            </div>
         </div>
-
-        <div class="col-xl-4 col-md-4 client-logo">
-          <img src="assets/img/clients/client-2.png" class="img-fluid" alt="">
-        </div>
-
-        <div class="col-xl-4 col-md-4 client-logo">
-          <img src="assets/img/clients/client-3.png" class="img-fluid" alt="">
-        </div>
-
-
-      </div>
-    
-</div>
-
-  </section>
+    </div>
+</section>

@@ -6,7 +6,7 @@ use App\Models\ContactInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ContactInfoController extends Controller
+class ActivitiesController extends Controller
 {
     public function index()
     {

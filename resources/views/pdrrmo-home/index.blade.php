@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 @endif
-    
+
                 @auth
                     <div class="btn-group position-absolute bottom-0 end-0 m-3" role="group">
                         @if (!$pdrrmoImagePath)
@@ -64,7 +64,7 @@
             </div>
         </div>
     </section>
-    
+
     <!--Create Modal -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -104,7 +104,7 @@
                 // Fetch available images (ensure to replace this with your actual model logic)
                 $images = $carouselImage ? $carouselImage->image_paths : [];
             @endphp
-            
+
             @if (count($images) > 0)
                 <!-- Carousel Indicators (only loop once for indicators) -->
                 <ol class="carousel-indicators"></ol>
@@ -132,7 +132,7 @@
             <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
             </a>
-    
+
             @auth
                 <div class="position-absolute bottom-0 end-0 m-3 z-index-10">
                     @if (count($images) === 0)
@@ -453,9 +453,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                @include('pdrrmo-home.featured-videos') 
+                                @include('pdrrmo-home.featured-videos')
                             </div>
-                            @include('pdrrmo-home.links') 
+                            @include('pdrrmo-home.links')
                         </div>
                     </div>
                 </div>
@@ -481,11 +481,11 @@
             const dateString = now.toLocaleString('en-GB', options);
             document.getElementById('current-time').innerHTML = dateString;
         }
-    
+
         // Initialize time update every second
         setInterval(updateTime, 1000);
         updateTime();
-    
+
         // Function to display the welcome modal (if set in session)
         document.addEventListener('DOMContentLoaded', function () {
             @if (session('welcome_message'))
@@ -494,63 +494,63 @@
                     backdrop: 'static'
                 });
                 myModal.show();
-    
+
                 // Auto close the modal after 5 seconds
                 setTimeout(function() {
                     myModal.hide();
                 }, 5000); // 5000ms = 5 seconds
             @endif
         });
-    
+
         // Function to populate the image paths in the delete images container
         document.addEventListener('DOMContentLoaded', function () {
             // Ensure image_paths is an array even if it's null or undefined
             const images = @json($carouselImage && $carouselImage->image_paths ? $carouselImage->image_paths : []);
             const container = document.getElementById('deleteImagesContainer');
             const baseUrl = "{{ asset('storage/') }}";  // Base URL for images
-    
+
             // Populate the delete image container with checkboxes for each image
             images.forEach(function (imagePath) {
                 const imageDiv = document.createElement('div');
                 imageDiv.classList.add('form-check');
-                
+
                 imageDiv.innerHTML = `
                     <input class="form-check-input" type="checkbox" value="${imagePath}" id="image-${imagePath}" name="image_paths[]">
                     <label class="form-check-label" for="image-${imagePath}">
                         <img src="${baseUrl}/${imagePath}" class="img-fluid mx-auto d-block" style="max-width: 50%; object-fit: contain;">
                     </label>
                 `;
-                
+
                 container.appendChild(imageDiv);
             });
         });
-    
+
         // Function to initialize the delete modal with selected image information
         function openDeleteModal(imagesToDelete) {
             const deleteImagesContainer = document.getElementById('deleteImagesContainer');
             deleteImagesContainer.innerHTML = '';  // Clear any previous selected images
-    
+
             if (imagesToDelete.length === 0) {
                 alert("No images selected to delete.");
                 return;
             }
-    
+
             // Create a list of selected images
             imagesToDelete.forEach(function(image) {
                 const imageDiv = document.createElement('div');
                 imageDiv.textContent = image;
                 deleteImagesContainer.appendChild(imageDiv);
             });
-    
+
             // Set the form action to delete the selected images
             const form = document.getElementById('carouselDeleteForm');
             form.action = '/carousel-image/delete'; // Modify this route as per your backend logic
         }
-    
+
         // Example usage: Call this function when the delete button is clicked
         // openDeleteModal(['image1.jpg', 'image2.jpg']);
     </script>
-    
+
 
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"></script>
 
